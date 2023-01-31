@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+
+import axios from 'axios';
 
 import { useState } from 'react';
 const RegForm = () => {
@@ -42,25 +43,52 @@ const RegForm = () => {
         setmobile(event.target.value);
     }
 
+
     async function register(e)
     {
-      e.preventDefault();
-      let item = {us,pass,fn,ln,email,mobile};
-      console.log(item);
-
-      let result = await fetch( "enter url here",{
-        method:'POST',
-        body:JSON.stringify(item),
-        header:{
-          "Content-Type" : 'application/json',
-          "Accept" : 'application/json'
+        e.preventDefault();
+        try{
+          await axios.post("http://localhost:8080/user/register",
+          {
+            username : us,
+            password : pass,
+            email : email,
+            firstname : fn,
+            lastname : ln,
+            mobile : mobile
+          });
+          alert("Registered Succesfully");
+          setemail("");
+          setfn("");
+          setln("");
+          setmobile("");
+          setpass("");
+          setus("");
+        }catch(err)
+        {
+            alert("Failed");
         }
-      } )    
-      result = await result.json()
-      console.log("Result",result)
+    }
+
+    // async function register(e)
+    // {
+    //   e.preventDefault();
+    //   let item = {us,pass,fn,ln,email,mobile};
+    //   console.log(item);
+
+    //   let result = await fetch( "http://localhost:8080/user/register",{
+    //     method:'POST',
+    //     body:JSON.stringify(item),
+    //     header:{
+    //       "Content-Type" : 'application/json',
+    //       "Accept" : 'application/json'
+    //     }
+    //   } )    
+    //   result = await result.json()
+    //   console.log("Result",result)
       
 
-    }
+    // }
 
     return ( 
    
@@ -92,7 +120,7 @@ const RegForm = () => {
   <div class="form-row">
     <div class="col-md-6 mb-3">
       <label for="validationCustom03">Mobile No</label>
-      <input type="number" class="form-control" id="validationCustom03" 
+      <input type="text" class="form-control" id="validationCustom03" 
       name="mobileno"
       value={mobile}
       onChange={changmobile}
