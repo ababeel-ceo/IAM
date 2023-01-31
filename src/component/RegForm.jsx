@@ -7,7 +7,7 @@ const RegForm = () => {
     const [ln,setln]=useState('');
     const [email,setemail]=useState('');
     const [mobile,setmobile]=useState();
-    const [status,setstatus]=useState();
+    // const [status,setstatus]=useState();
     const [us,setus]=useState('');
     const [pass,setpass]=useState('');
 
@@ -29,10 +29,10 @@ const RegForm = () => {
     {
         setln(event.target.value);
     }
-    const changestatus=(event)=>
-    {
-        setstatus(event.target.value);
-    }
+    // const changestatus=(event)=>
+    // {
+    //     setstatus(event.target.value);
+    // }
     const changeHandleemail=(event)=>
     {
         setemail(event.target.value);
@@ -45,7 +45,7 @@ const RegForm = () => {
     async function register(e)
     {
       e.preventDefault();
-      let item = {us,pass,fn,ln,email,mobile,status};
+      let item = {us,pass,fn,ln,email,mobile};
       console.log(item);
 
       let result = await fetch( "enter url here",{
@@ -99,7 +99,7 @@ const RegForm = () => {
       />
       
     </div>
-    <div class="col-md-6 mb-3">
+    {/* <div class="col-md-6 mb-3">
       <label for="validationCustom04">Status</label>
       <select class="custom-select" id="validationCustom04" 
       selected 
@@ -111,7 +111,7 @@ const RegForm = () => {
         <option>Inactive</option>
       </select>
       
-    </div>
+    </div> */}
     <div class="col-md-6 mb-3">
       <label for="validationCustom05">Username</label>
       <input type="text" class="form-control" id="validationCustom05" 
