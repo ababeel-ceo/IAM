@@ -1,15 +1,19 @@
 import { Link , useHistory} from "react-router-dom"; 
+
 import { useState} from "react";
-import React from "react";
+import React, {useEffect} from "react";
+import axios from "axios";
+
+
 
 
 const LogForm = () => {
+    // const navigate = useNavigate();
 
     const history = useHistory();
-
     const [username,setUsername]=useState("");
     const [password,setPassword]=useState("");
-    const [errMsg,setErrorMsg]=useState('');
+    const [errMsg,setErrMsg]=useState('');
 
 
     const changeHandleUsername=(event)=>
@@ -20,22 +24,57 @@ const LogForm = () => {
     {
         setPassword(event.target.value);
     }
-    
-    const handleSubmit=(e)=>
+     
+    async function handleSubmit ()
     {
-        e.preventDefault();
-        if(username !=="admin" || password !== "admin") 
-        {
-            setErrorMsg("Invalid Username or Password")
+
+        try{
+         await axios.post("http://localhost:8080/user/authenticate",
+            {
+              email : username,
+              password : password
+              
+            }).then(response => {
+                const jwtToken = response.data.token;
+                console.log("this jt  :",jwtToken);
+                localStorage.setItem('jwtToken', jwtToken);
+            });
            
-            return;
-        }
-        history.push("/userlist")
-        localStorage.setItem('auth',true);
+            alert("Logging in");    
+            setUsername(''); 
+            history.push('/dashboard');
+      
+          }catch(err)
+          {
+              alert(err.response.status);
+          }
        
+        
     }
 
-    return ( 
+//  const handleSubmit=()=>
+//  { 
+
+//      var Obj = {
+//          username:username,
+//          password:password,
+//      }
+//      axios.post("http://localhost:8080/user/login" ,Obj).then(res=>{
+//         let msg = res.data;
+//         //  console.log(JSON.stringify(res));  
+//         if(msg)
+//         {
+//             localStorage.setItem("auth",res);
+//             history.push("/userlist")
+//         }     
+//          alert(msg);
+      
+//      }).catch(err=>{
+//          alert(JSON.stringify(err));
+         
+//      })
+//  }
+    return ( <>
         <section className="form my-4 mx-5">
                     
                     <div className="container pt-5">
@@ -43,8 +82,7 @@ const LogForm = () => {
                     <div ><p className='text-danger'>{errMsg}</p></div>
                         <div className="row">
                             <div className="col-lg-7 px-5 pt-1 col-md-7 offset-md-4">
-                               
-                                <form onSubmit={handleSubmit}>
+                                
                                     <div className="form-row">
                                         <div className="col-lg-7">
                                             <input type="text" 
@@ -53,7 +91,7 @@ const LogForm = () => {
                                             onChange={changeHandleUsername}
                                             placeholder="Username" 
                                             className="form-control my-3 p-4" />
-                                             {/* {errors.username && <div className="alert alert-danger">{errors.username}</div>} */}
+                                             { errMsg.username && <div className="alert alert-danger">{errMsg.username}</div> }
                                         </div>
                                        
                                        
@@ -70,18 +108,18 @@ const LogForm = () => {
                                     </div>
                                     <div className="form-row">
                                         <div className="col-lg-7">
-                                            <input type="submit" className="btn1 mt-3 mb-5" />
+                                            <button className="btn1 mt-3 mb-5" onClick={()=>handleSubmit()}>Login</button>
                                         </div>
                                     </div>
-                                    
-                                </form>
+                                     
                             </div>
                             
                         </div>
                         <p align="center">Don't have an account? <Link  to="/register">Register here</Link></p>
                     </div>
                 </section>
+
+                </>
      );
 }
- 
 export default LogForm;

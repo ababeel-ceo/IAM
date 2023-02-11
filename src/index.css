@@ -2,7 +2,7 @@
 *{
   margin: 0;
   font-family: Quicksand;
-  color: #333;
+
 }
 
 .btn1{
@@ -25,3 +25,84 @@
   max-width: 500px;
   align-items: center;
 }
+
+/* Side Navbar design  */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 150px;
+  background-color: #f2f2f2;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+ 
+.sidebar a.active {
+  background-color: #333;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+.btn-nav{
+  border: none;
+}
+
+/* home page design code  */
+
+.header {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.hero-section {
+  background-color: teal;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-section h1 {
+  font-size: 50px;
+  color: white;
+  text-shadow: 2px 2px #333;
+}
+.features {
+  padding: 50px;
+  text-align: center;
+}
+.feature {
+  display: inline-block;
+  width: 30%;
+  text-align: left;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.feature h3 {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+.cta {
+  background-color: #333;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+.cta a {
+  color: white;
+  text-decoration: none;
+}
+
+/* ---------------------- */

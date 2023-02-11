@@ -2,20 +2,21 @@
 import axios from 'axios';
 
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
+
 const RegForm = () => {
+
+    
+    const history=useHistory();
 
     const [fn,setfn]=useState('');
     const [ln,setln]=useState('');
     const [email,setemail]=useState('');
-    const [mobile,setmobile]=useState();
-    // const [status,setstatus]=useState();
-    const [us,setus]=useState('');
+    const [mobile,setmobile]=useState('');
     const [pass,setpass]=useState('');
+    const [errMsg, setErrMsg] = useState('');
 
-    const changeus=(event)=>
-    {
-        setus(event.target.value);
-    }
+    
 
     const changepass=(event)=>
     {
@@ -30,10 +31,7 @@ const RegForm = () => {
     {
         setln(event.target.value);
     }
-    // const changestatus=(event)=>
-    // {
-    //     setstatus(event.target.value);
-    // }
+  
     const changeHandleemail=(event)=>
     {
         setemail(event.target.value);
@@ -41,6 +39,7 @@ const RegForm = () => {
     const changmobile=(event)=>
     {
         setmobile(event.target.value);
+       
     }
 
 
@@ -50,51 +49,38 @@ const RegForm = () => {
         try{
           await axios.post("http://localhost:8080/user/register",
           {
-            username : us,
+            
             password : pass,
             email : email,
             firstname : fn,
             lastname : ln,
             mobile : mobile
           });
-          alert("Registered Succesfully");
+          
           setemail("");
           setfn("");
           setln("");
           setmobile("");
           setpass("");
-          setus("");
+          history.push("/login");
+          
+
         }catch(err)
         {
             alert("Failed");
         }
     }
 
-    // async function register(e)
-    // {
-    //   e.preventDefault();
-    //   let item = {us,pass,fn,ln,email,mobile};
-    //   console.log(item);
-
-    //   let result = await fetch( "http://localhost:8080/user/register",{
-    //     method:'POST',
-    //     body:JSON.stringify(item),
-    //     header:{
-    //       "Content-Type" : 'application/json',
-    //       "Accept" : 'application/json'
-    //     }
-    //   } )    
-    //   result = await result.json()
-    //   console.log("Result",result)
-      
-
-    // }
-
     return ( 
-   
-                         
+   <>
+                    
 <div className=" col-lg-7 offset-md-2 pt-5 px-5">
-    <h3>Register</h3><br />
+    <h3>Register</h3><br/>
+    {
+    
+        errMsg
+      
+    }
     
 <form class="needs-validation"  >
   <div class="form-row">
@@ -127,27 +113,6 @@ const RegForm = () => {
       />
       
     </div>
-    {/* <div class="col-md-6 mb-3">
-      <label for="validationCustom04">Status</label>
-      <select class="custom-select" id="validationCustom04" 
-      selected 
-      name="status"
-      value={status}
-      onChange={changestatus}
-      >
-        <option>Active</option>
-        <option>Inactive</option>
-      </select>
-      
-    </div> */}
-    <div class="col-md-6 mb-3">
-      <label for="validationCustom05">Username</label>
-      <input type="text" class="form-control" id="validationCustom05" 
-      name="username"
-      value={us}
-      onChange={changeus}
-      />
-    </div>
     <div class="col-md-6 mb-3">
       <label for="validationCustom05">Password</label>
       <input type="password" class="form-control" id="validationCustom05" 
@@ -169,7 +134,7 @@ const RegForm = () => {
   <button onClick={register} className="btn1" type="submit">Register</button>
 </form>
 </div>
-   
+</>
     );
 }
  

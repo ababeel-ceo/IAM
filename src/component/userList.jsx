@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import AdminNavbar from './Admin/AdminNavbar';
+import SideNavBar from './side-navbar';
 const UserList = () => {
 
     
@@ -21,7 +23,11 @@ const UserList = () => {
 
     ]
     );
-    return (  
+    return (
+
+
+<>
+
             <div className="container pt-5">
                 <h2 className="text-center">
                     User's list
@@ -52,6 +58,7 @@ const UserList = () => {
                     </tbody>
                     </table>
             </div>
+            </>
 
     );
 }
